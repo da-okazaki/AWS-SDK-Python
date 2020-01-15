@@ -2,10 +2,6 @@
 ■ Library
 pip3 install opencv-python
 pip3 install pillow
-
-■ Reference
-https://docs.aws.amazon.com/ja_jp/rekognition/latest/dg/images-displaying-bounding-boxes.html#w660aac15b7c21c37b4b3b3
-
 """
 
 import io
@@ -43,10 +39,6 @@ def show_faces(photo, bucket):
     print("## Rekognition Response")
     print(response)
     
-    
-    #with open('./JSON/json_labels01.json', 'w') as f:
-    #    json.dump(response, f, indent=2)
-
     imgWidth, imgHeight = image.size  
     draw = ImageDraw.Draw(image)                      
 
@@ -61,7 +53,6 @@ def show_faces(photo, bucket):
         
     print(responsePerson)
     
-    #for faceDetail in response['FaceDetails']:
     for faceDetail in responsePerson['Instances']:
         
         box = faceDetail['BoundingBox']
@@ -85,14 +76,10 @@ def show_faces(photo, bucket):
         )
         draw.line(points, fill='#d40000', width=3)
 
-        # Alternatively can draw rectangle. However you can't set line width.
-        #draw.rectangle([left,top, left + width, top + height], outline='#00d400') 
-
     # プレビューを表示
     image.show()
 
     # 画像を保存
-    #image.save('./reko/image.jpg', quality=95)
     image.save('./JSON/image2.jpg', quality=95)
 
     print("## image")
@@ -100,10 +87,7 @@ def show_faces(photo, bucket):
 
     s3_bucket.upload_file("./JSON/image2.jpg", "image2.jpg")
 
-    #return len(response['FaceDetails'])
     return len(responsePerson['Instances'])
-    """
-    """
 
 
 def main():
